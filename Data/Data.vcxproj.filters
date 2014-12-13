@@ -10,6 +10,9 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Processing.h" />
+    <ClInclude Include="Mover.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="KeyInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp" />
@@ -17,5 +20,7 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Processing.cpp" />
+    <ClCompile Include="Mover.cpp" />
+    <ClCompile Include="Character.cpp" />
   </ItemGroup>
 </Project>

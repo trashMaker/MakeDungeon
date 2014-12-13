@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Console", "Console\Console.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Win32", "Win32\Win32.vcxproj", "{08224F7B-AF7D-48D2-A684-6EE8A037DB78}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.vcxproj", "{04EA5893-6F75-43ED-BC29-812635294582}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -33,6 +35,10 @@ Global
 		{08224F7B-AF7D-48D2-A684-6EE8A037DB78}.Debug|Win32.Build.0 = Debug|Win32
 		{08224F7B-AF7D-48D2-A684-6EE8A037DB78}.Release|Win32.ActiveCfg = Release|Win32
 		{08224F7B-AF7D-48D2-A684-6EE8A037DB78}.Release|Win32.Build.0 = Release|Win32
+		{04EA5893-6F75-43ED-BC29-812635294582}.Debug|Win32.ActiveCfg = Debug|Win32
+		{04EA5893-6F75-43ED-BC29-812635294582}.Debug|Win32.Build.0 = Debug|Win32
+		{04EA5893-6F75-43ED-BC29-812635294582}.Release|Win32.ActiveCfg = Release|Win32
+		{04EA5893-6F75-43ED-BC29-812635294582}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

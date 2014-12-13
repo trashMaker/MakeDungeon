@@ -1,8 +1,11 @@
 #include <iostream>
 #include <string>
-#include "Processing.h"
+
 #include "Common.h"
 #include "Random.h"
+
+#include "Processing.h"
+#include "Character.h"
 //-----------------------------------
 //処理 コンストラクタ
 //引数 
@@ -10,6 +13,8 @@
 //-----------------------------------
 Processing::Processing(){
 	mRandom = new Random();
+	mCharacter = new Character();
+	mState = GAMEINIT;
 }
 //-----------------------------------
 //処理 デストラクタ
@@ -18,6 +23,7 @@ Processing::Processing(){
 //-----------------------------------
 Processing::~Processing(){
 	delete mRandom;
+	delete mCharacter;
 }
 //-----------------------------------
 //処理 全データをまとめて運用
@@ -25,6 +31,20 @@ Processing::~Processing(){
 //返値 none 
 //-----------------------------------
 void Processing::doMainLoop(){
+	switch (mState){
+		case GAMEINIT:
+			makeRandomMap();
+			setCharactorPos();
+			mState = GAMEMAIN;
+			//break;
+		case GAMEMAIN:
+			mMap.at(0).disp();
+			mCharacter->draw();
+			break;
+	}
+}
+
+void Processing::makeRandomMap(){
 	static bool readMapChipFlag = true;
 	//int oneSize = 50;
 	//
@@ -34,15 +54,12 @@ void Processing::doMainLoop(){
 		mMap.push_back(Map("Square7x7", ".txt"));
 		readMapChipFlag = false;
 	}
-	
-	setMapChipDataCheck(10, 16, 2);
-	
-	setRandomPassagePosition(2,16);
+
+	setMapChipDataCheck(15, 16, 2);
+
+	setRandomPassagePosition(2, 16);
 
 	setConsolidatedPassage();
-
-	
-	mMap.at(0).disp();
 }
 //-----------------------------------
 //処理 全体MAPにデータを追加していく rangeは範囲を絞る
@@ -522,4 +539,18 @@ void Processing::setConsolidated(int firstPos, int endPos, int posX, int posY){
 			mMap.at(0).getData()(x, posY) = 't';
 		}
 	}
+}
+
+void Processing::setCharactorPos(){
+	int charactorPosX =0;
+	int charactorPosY =0;
+	do{
+		charactorPosX = mRandom->getRandom(0, mMap.at(0).getWidth()-1);
+		charactorPosY = mRandom->getRandom(0, mMap.at(0).getHeight()-1);
+	} while (mMap.at(0).getData()(charactorPosX, charactorPosY) != ' ');
+	
+	mCharacter->setX(charactorPosX);
+	mCharacter->setY(charactorPosY);
+
+	mMap.at(0).getData()(charactorPosX, charactorPosY) = 'c';
 }

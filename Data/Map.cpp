@@ -158,7 +158,7 @@ void Map::disp()const throw(){
 			case '#':
 				std::cout << "¡";
 				break;
-			case 'C':
+			case 'c':
 				std::cout << "š";
 				break;
 			case 't':
@@ -170,5 +170,4 @@ void Map::disp()const throw(){
 		}
 		std::cout << std::endl;
 	}
-	
 }

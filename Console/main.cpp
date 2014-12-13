@@ -4,8 +4,9 @@
 int main(){
 
 	Processing mProcessing;
-
-	mProcessing.doMainLoop();
+	//while (1){
+		mProcessing.doMainLoop();
+	//}
 
 	return 0;
 }

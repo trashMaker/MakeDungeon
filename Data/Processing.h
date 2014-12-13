@@ -4,6 +4,7 @@
 #include "Map.h"
 
 class Random;
+class Character;
 
 class Processing{
 private:
@@ -21,7 +22,7 @@ private:
 
 	std::vector<struct Position> consolidatedList;	//space random potision
 
-	Random* mRandom;
+	
 
 	struct Data{
 		int firstX;
@@ -42,6 +43,17 @@ private:
 			distance = static_cast<int>(sqrt(pow((argEndX - argFirstX), 2) + pow((argEndY - argFirstY), 2)));
 		}
 	};
+
+	enum STATE{
+		GAMEINIT,
+		GAMEMAIN,
+	};
+	STATE mState;
+
+
+	Random* mRandom;
+	Character* mCharacter;
+	
 public:
 
 	Processing();
@@ -66,4 +78,7 @@ public:
 	bool setWayConsolidatedList(const std::string& way, std::vector<struct Position>* lComparisonSourcePos, std::vector<struct Position>* lComparisonDestinationPos);
 	bool setDistanceConsolidatedList(const std::vector<struct Position>& lComparisonSourcePos, const std::vector<struct Position>& lComparisonDestinationPos, std::vector<struct Data>* disPos);
 	int getNeaIndexrDistancePos(const std::vector<struct Data>& disPos);
+
+	void makeRandomMap();
+	void setCharactorPos();
 };

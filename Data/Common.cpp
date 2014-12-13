@@ -131,7 +131,6 @@ std::vector<std::string> readFileData(const std::string& file, const std::string
 //-----------------------------------
 int parseProperty(const std::vector<std::string>& data, const char* propertyName){
 
-	int hp = -1;
 	for (auto t : data){
 		const std::string input = t;
 		if (input.find(propertyName) != std::string::npos){
@@ -146,7 +145,7 @@ int parseProperty(const std::vector<std::string>& data, const char* propertyName
 			}
 		}
 	}
-	ASSERT(0, hp, STRING(hp), "Ç™ê›íËÇ≥ÇÍÇ‹ÇπÇÒÇ≈ÇµÇΩ");
+	ASSERT(0, propertyName, STRING(propertyName), "Ç™ê›íËÇ≥ÇÍÇ‹ÇπÇÒÇ≈ÇµÇΩ");
 
 	return 0;
 }
