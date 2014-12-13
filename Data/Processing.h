@@ -62,4 +62,8 @@ public:
 	int getNeaIndexrDistancePos(int comparisonIndex, const std::vector<struct Data>& disPos);
 	void consolidatedPassage(int index, const std::vector<struct Data>& disPos);
 	void setConsolidated(int firstPos, int endPos,int posX, int posY);
+
+	bool setWayConsolidatedList(const std::string& way, std::vector<struct Position>* lComparisonSourcePos, std::vector<struct Position>* lComparisonDestinationPos);
+	bool setDistanceConsolidatedList(const std::vector<struct Position>& lComparisonSourcePos, const std::vector<struct Position>& lComparisonDestinationPos, std::vector<struct Data>* disPos);
+	int getNeaIndexrDistancePos(const std::vector<struct Data>& disPos);
 };

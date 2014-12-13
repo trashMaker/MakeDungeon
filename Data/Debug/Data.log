@@ -1,10 +1,11 @@
-﻿2014/12/13 11:40:43 にビルドを開始しました。
+﻿2014/12/13 14:15:08 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "D:\MakeGame\Data\Data.vcxproj" (Build ターゲット)。
      1>ClCompile:
          D:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Processing.cpp
          Processing.cpp
-     1>d:\makegame\data\processing.cpp(261): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
-     1>d:\makegame\data\processing.cpp(302): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>d:\makegame\data\processing.cpp(281): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>d:\makegame\data\processing.cpp(355): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>d:\makegame\data\processing.cpp(370): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
        Lib:
          D:\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\MakeGame\Debug\Data.lib" /NOLOGO Debug\Common.obj
          Debug\Exception.obj
@@ -16,4 +17,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:01.88
+経過時間 00:00:01.05

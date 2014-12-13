@@ -34,13 +34,13 @@ void Processing::doMainLoop(){
 		mMap.push_back(Map("Square7x7", ".txt"));
 		readMapChipFlag = false;
 	}
-	std::cout <<"koko" <<  std::endl;
+	
 	setMapChipDataCheck(10, 16, 2);
-	std::cout << "koko1" << std::endl;
+	
 	setRandomPassagePosition(2,16);
-	std::cout << "koko2" << std::endl;
+
 	setConsolidatedPassage();
-	std::cout << "koko4" << std::endl;
+
 	
 	mMap.at(0).disp();
 }
@@ -180,34 +180,51 @@ void Processing::setConsolidatedPassage(){
 
 	std::vector<struct Position> lWaySapcePos;
 	std::vector<struct Data> lDistance;
-	
-	std::vector<std::string> strList = { "leftup", "rightup","leftdown","rightdown","up","down","all"};
+
+	std::vector<std::string> strList = { "leftup", "rightup", "leftdown", "rightdown", "up", "down", "all" };
 
 	for (auto t : strList){
 		bool getWay = setWayConsolidatedList(t, &lWaySapcePos);
-		std::cout << "koko3.1" << std::endl;
+		
 		if (getWay == true){
 			for (int i = 0; i < static_cast<int>(lWaySapcePos.size()); ++i){
 
 				bool getDis = setDistanceConsolidatedList(i, lWaySapcePos, &lDistance);
-				std::cout << "koko3.2" << std::endl;
-				int index =0;
+				
+				int index = 0;
 				if (getDis == true){
 					for (int j = 0; j < static_cast<int>(lDistance.size()); ++j){
-						index = getNeaIndexrDistancePos(index, lDistance);
-						std::cout << "koko3.3" << std::endl;
+						index = getNeaIndexrDistancePos(index, lDistance);	
 					}
-				
 					if (index != -1){
 						consolidatedPassage(index, lDistance);
-						std::cout << "koko3.4" << std::endl;
 					}
 				}
 				lDistance.clear();
 			}
 		}
 		lWaySapcePos.clear();
-		std::cout << "koko3.5" << std::endl;
+	}
+	strList.clear();
+
+	std::vector<struct Position> lComparisonSourcePos;
+	std::vector<struct Position> lComparisonDestinationPos;
+	strList = { "up", "down", "all" };
+	for (auto t : strList){
+		bool getWay = setWayConsolidatedList(t, &lComparisonSourcePos, &lComparisonDestinationPos);
+		if (getWay == true){
+			bool getDis = setDistanceConsolidatedList(lComparisonSourcePos, lComparisonDestinationPos, &lDistance);
+			int index = 0;
+			if (getDis == true){
+				index = getNeaIndexrDistancePos(lDistance);
+			}
+			if (index != -1){
+				consolidatedPassage(index, lDistance);
+			}
+			lDistance.clear();
+		}
+		lComparisonSourcePos.clear();
+		lComparisonDestinationPos.clear();
 	}
 }
 //-----------------------------------
@@ -256,31 +273,63 @@ bool Processing::setWayConsolidatedList(const std::string& way, std::vector<stru
 				wayPos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
 			}
 		}
-	}
-	
+	}	
 	return wayPos->size();
-	
-	//else if (way == "up"){
-	//	for (int index = 0; index < consolidatedList.size(); ++index){
-	//		if (consolidatedList.at(index).y < splitY){
+}
 
-	//			wayPos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
-	//		}
-	//	}
-	//}
-	//else if (way == "down"){
-	//	for (int index = 0; index < consolidatedList.size(); ++index){
-	//		if (consolidatedList.at(index).y > splitY){
+bool Processing::setWayConsolidatedList(const std::string& way, std::vector<struct Position>* lComparisonSourcePos, std::vector<struct Position>* lComparisonDestinationPos){
+	int splitX = mMap.at(0).getWidth() / 2;
+	int splitY = mMap.at(0).getHeight() / 2;
+	if (way == "up"){
+		for (int index = 0; index < static_cast<int>(consolidatedList.size()); ++index){
+			if (consolidatedList.at(index).x <= splitX &&
+				consolidatedList.at(index).y <= splitY){
 
-	//			wayPos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
-	//		}
-	//	}
-	//}
-	//else if(way == "all"){
-	//	for (int index = 0; index < consolidatedList.size(); ++index){
-	//		wayPos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
-	//	}
-	//}
+				lComparisonSourcePos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
+			}
+		}
+		for (int index = 0; index < static_cast<int>(consolidatedList.size()); ++index){
+			if (consolidatedList.at(index).x > splitX &&
+				consolidatedList.at(index).y <= splitY){
+
+				lComparisonDestinationPos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
+			}
+		}
+	}
+	else if (way == "down"){
+		for (int index = 0; index < static_cast<int>(consolidatedList.size()); ++index){
+			if (consolidatedList.at(index).x <= splitX &&
+				consolidatedList.at(index).y > splitY){
+
+				lComparisonSourcePos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
+			}
+		}
+		for (int index = 0; index < static_cast<int>(consolidatedList.size()); ++index){
+			if (consolidatedList.at(index).x > splitX &&
+				consolidatedList.at(index).y > splitY){
+
+				lComparisonDestinationPos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
+			}
+		}
+	}
+	else if (way == "all"){
+		for (int index = 0; index < static_cast<int>(consolidatedList.size()); ++index){
+			if (consolidatedList.at(index).y < splitY){
+
+				lComparisonSourcePos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
+			}
+		}
+		for (int index = 0; index < static_cast<int>(consolidatedList.size()); ++index){
+			if (consolidatedList.at(index).y > splitY){
+
+				lComparisonDestinationPos->push_back(Position(consolidatedList.at(index).x, consolidatedList.at(index).y));
+			}
+		}
+	}
+	if (lComparisonDestinationPos->size() != 0 && lComparisonSourcePos->size() != 0){
+		return true;
+	}
+	return false;
 }
 //-----------------------------------
 //èàóù î‰ärÇ∑ÇÈóvëfÇ∆Ç∑Ç◊ÇƒÇÃóvëfÇî‰ärÇµÇƒäiî[
@@ -301,6 +350,21 @@ bool Processing::setDistanceConsolidatedList(int comparisonIndex,const std::vect
 	}
 	return disPos->size();
 }
+bool Processing::setDistanceConsolidatedList(const std::vector<struct Position>& lComparisonSourcePos, const std::vector<struct Position>& lComparisonDestinationPos, std::vector<struct Data>* disPos){
+
+	for (int i = 0; i < static_cast<int>(lComparisonSourcePos.size()); ++i){
+		for (int j = 0; j < static_cast<int>(lComparisonDestinationPos.size()); ++j){
+			int oldPosX = lComparisonSourcePos.at(i).x;
+			int oldPosY = lComparisonSourcePos.at(i).y;
+
+			int posX = lComparisonDestinationPos.at(j).x;
+			int posY = lComparisonDestinationPos.at(j).y;
+
+			disPos->push_back(Data(oldPosX, posX, oldPosY, posY));
+		}
+	}
+	return disPos->size();
+}
 //-----------------------------------
 //èàóù î‰ärópÇÃóvëfÇí≤Ç◊ÇƒàÍî‘ç≈è¨ÇÃãóó£ÇÃindexÇï‘Ç∑
 //à¯êî comparisonIndex int	î‰äróvëf
@@ -310,6 +374,21 @@ bool Processing::setDistanceConsolidatedList(int comparisonIndex,const std::vect
 int Processing::getNeaIndexrDistancePos(int comparisonIndex, const std::vector<struct Data>& disPos){
 	int distance = 100;
 	for (int index = comparisonIndex; index < static_cast<int>(disPos.size()); ++index){
+		if (distance >= disPos.at(index).distance){
+			distance = disPos.at(index).distance;
+		}
+	}
+	//return index
+	for (int index = 0; index < static_cast<int>(disPos.size()); ++index){
+		if (distance == disPos.at(index).distance){
+			return index;
+		}
+	}
+	return -1;
+}
+int Processing::getNeaIndexrDistancePos(const std::vector<struct Data>& disPos){
+	int distance = 100;
+	for (int index = 0; index < static_cast<int>(disPos.size()); ++index){
 		if (distance >= disPos.at(index).distance){
 			distance = disPos.at(index).distance;
 		}
