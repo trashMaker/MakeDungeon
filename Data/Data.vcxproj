@@ -73,6 +73,21 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Array2D.h" />
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Processing.h" />
+    <ClInclude Include="Random.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Common.cpp" />
+    <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Processing.cpp" />
+    <ClCompile Include="Random.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,0 +1,18 @@
+﻿2014/12/13 9:21:49 にビルドを開始しました。
+     1>ノード 3 上のプロジェクト "D:\MakeGame\Win32\Win32.vcxproj" (Rebuild ターゲット)。
+     1>ClCompile:
+         D:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\MakeGame\Data /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt WinMain.cpp
+         WinMain.cpp
+     1>d:\makegame\win32\winmain.cpp(63): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\microsoft visual studio 12.0\vc\include\stdio.h(226) : 'freopen' の宣言を確認してください。
+     1>d:\makegame\win32\winmain.cpp(64): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\microsoft visual studio 12.0\vc\include\stdio.h(226) : 'freopen' の宣言を確認してください。
+       Link:
+         D:\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\MakeGame\Debug\Win32.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\MakeGame\Debug\Win32.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\MakeGame\Debug\Win32.lib" /MACHINE:X86 Debug\WinMain.obj
+         D:\MakeGame\Debug\Data.lib
+         Win32.vcxproj -> D:\MakeGame\Debug\Win32.exe
+     1>プロジェクト "D:\MakeGame\Win32\Win32.vcxproj" (Rebuild ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:00.81

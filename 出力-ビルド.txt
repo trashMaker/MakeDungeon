@@ -1,0 +1,6 @@
+﻿1>------ ビルド開始: プロジェクト:Data, 構成:Debug Win32 ------
+1>  Processing.cpp
+1>  Data.vcxproj -> D:\MakeGame\Debug\Data.lib
+2>------ ビルド開始: プロジェクト:Console, 構成:Debug Win32 ------
+2>  Console.vcxproj -> D:\MakeGame\Debug\Console.exe
+========== ビルド: 2 正常終了、0 失敗、0 更新不要、0 スキップ ==========

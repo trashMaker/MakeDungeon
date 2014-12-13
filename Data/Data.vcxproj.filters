@@ -3,4 +3,19 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Array2D.h" />
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="Random.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Processing.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Common.cpp" />
+    <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Processing.cpp" />
+  </ItemGroup>
 </Project>
