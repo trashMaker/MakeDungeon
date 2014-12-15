@@ -6,6 +6,7 @@
 
 #include "Processing.h"
 #include "Character.h"
+#include "KeyInput.h"
 //-----------------------------------
 //処理 コンストラクタ
 //引数 
@@ -14,7 +15,8 @@
 Processing::Processing(){
 	mRandom = new Random();
 	mCharacter = new Character();
-	mState = GAMEINIT;
+	mKeyInput = new KeyInput();
+	mState = GAME_INIT;
 }
 //-----------------------------------
 //処理 デストラクタ
@@ -24,6 +26,7 @@ Processing::Processing(){
 Processing::~Processing(){
 	delete mRandom;
 	delete mCharacter;
+	delete mKeyInput;
 }
 //-----------------------------------
 //処理 全データをまとめて運用
@@ -31,15 +34,26 @@ Processing::~Processing(){
 //返値 none 
 //-----------------------------------
 void Processing::doMainLoop(){
+
+	mKeyInput->getKey();	//キー取得
+
 	switch (mState){
-		case GAMEINIT:
+	case GAME_INIT:
 			makeRandomMap();
-			setCharactorPos();
-			mState = GAMEMAIN;
-			//break;
-		case GAMEMAIN:
-			mMap.at(0).disp();
+			firstSetCharactorPos();
+			mState = GAME_DRAW;
+			break;
+	case GAME_DRAW:
+			system("cls");//描画クリア
+			draw(10);
 			mCharacter->draw();
+			mState = GAME_MAIN;
+			break;
+	case GAME_MAIN:
+		bool getMoveFlag = keyPushAction();
+			if (getMoveFlag){
+				mState = GAME_DRAW;
+			}
 			break;
 	}
 }
@@ -54,12 +68,18 @@ void Processing::makeRandomMap(){
 		mMap.push_back(Map("Square7x7", ".txt"));
 		readMapChipFlag = false;
 	}
+	//init
+	mapClear(0, '#');
 
 	setMapChipDataCheck(15, 16, 2);
 
 	setRandomPassagePosition(2, 16);
 
 	setConsolidatedPassage();
+
+	setStairs();
+
+	changePassageToSpace();
 }
 //-----------------------------------
 //処理 全体MAPにデータを追加していく rangeは範囲を絞る
@@ -540,8 +560,48 @@ void Processing::setConsolidated(int firstPos, int endPos, int posX, int posY){
 		}
 	}
 }
+//-----------------------------------
+//処理 map全体の何処かに下りる階段を作成 階段の位置をstairsに追加
+//引数 none
+//返値 none
+//-----------------------------------
+void Processing::setStairs(){
+	int stairsPosX = 0;
+	int stairsPosY = 0;
+	do{
+		stairsPosX = mRandom->getRandom(0, mMap.at(0).getWidth() - 1);
+		stairsPosY = mRandom->getRandom(0, mMap.at(0).getHeight() - 1);
+	} while (mMap.at(0).getData()(stairsPosX, stairsPosY) != ' ');
 
-void Processing::setCharactorPos(){
+	mMap.at(0).getData()(stairsPosX, stairsPosY) = 's';
+
+	stairs.x = stairsPosX;
+	stairs.y = stairsPosY;
+}
+//-----------------------------------
+//処理 map全体の通路部分をスペースに変換
+//引数 none
+//返値 none
+//-----------------------------------
+void Processing::changePassageToSpace(){
+	int width = mMap.at(0).getWidth();
+	int height = mMap.at(0).getHeight();
+
+	for (int y = 0; y < height; ++y){
+		for (int x = 0; x < width; ++x){
+
+			if (mMap.at(0).getData()(x, y) == 't'){
+				mMap.at(0).getData()(x, y) = ' ';
+			}
+		}
+	}
+}
+//-----------------------------------
+//処理 キャラ位置を空白位置にセット c
+//引数 none
+//返値 none
+//-----------------------------------
+void Processing::firstSetCharactorPos(){
 	int charactorPosX =0;
 	int charactorPosY =0;
 	do{
@@ -553,4 +613,144 @@ void Processing::setCharactorPos(){
 	mCharacter->setY(charactorPosY);
 
 	mMap.at(0).getData()(charactorPosX, charactorPosY) = 'c';
+}
+//-----------------------------------
+//処理 全体MAPの出力
+//引数 見せる範囲
+//返値 none
+//-----------------------------------
+void Processing::draw(int viewRange){
+
+	int width = mMap.at(0).getWidth();
+	int height = mMap.at(0).getHeight();
+
+	Position charctorPos = getCharctorPos();
+	int minViewRangeX, maxViewRangeX;
+	int minViewRangeY, maxViewRangeY;
+	setDrawRangeMinMax(&minViewRangeX, &maxViewRangeX, charctorPos.x, viewRange, width);
+	setDrawRangeMinMax(&minViewRangeY, &maxViewRangeY, charctorPos.y, viewRange, height);
+
+	for (int y = minViewRangeY; y < maxViewRangeY; ++y){
+		for (int x = minViewRangeX; x < maxViewRangeX; ++x){
+
+			switch (mMap.at(0).getData()(x, y)){
+			case '#':
+				std::cout << "■";
+				break;
+			case 'c':
+				std::cout << "★";
+				break;
+			case 't':
+				std::cout << "通";
+				break;
+			case 's':
+				std::cout << "階";
+				break;
+			default:
+				std::cout << "　";
+			}
+		}
+		std::cout << std::endl;
+	}
+}
+//-----------------------------------
+//処理 min maxの範囲をセット
+//引数 minNum	int*	
+//　　 maxNum	int*
+//　　 charctorPos	int	キャラ位置のポジション
+//　　 range		const int 見える範囲
+//　　 maxLength		const int 見える範囲の最大位置
+//返値 none
+//-----------------------------------
+void Processing::setDrawRangeMinMax(int* minNum, int* maxNum, int charctorPos, const int range, const int maxLength){
+	
+	if (charctorPos - range <= 0){
+		*minNum = 0;
+		*maxNum = range * 2;
+	}
+	else{
+		*minNum = charctorPos - range;
+		if (charctorPos + range >= maxLength){
+			*maxNum = maxLength;
+			*minNum = maxLength - (range * 2);
+		}
+		else{
+			*maxNum = charctorPos + range;
+		}
+	}
+	ASSERT(0 <= *minNum && *minNum <= maxLength, *minNum, STRING(minNum), "minNumの数値が範囲外になっています");
+	ASSERT(0 <= *maxNum && *maxNum <= maxLength, *maxNum, STRING(maxNum), "maxNumの数値が範囲外になっています");
+}
+//-----------------------------------
+//処理 キャラクターのポジションを得る
+//引数 
+//返値 Position
+//-----------------------------------
+Processing::Position Processing::getCharctorPos(){
+
+	int width = mMap.at(0).getWidth();
+	int height = mMap.at(0).getHeight();
+
+	int charctorPosX = 0;
+	int charctorPosY = 0;
+
+	for (int y = 0; y < height; ++y){
+		for (int x = 0; x < width; ++x){
+
+			if (mMap.at(0).getData()(x, y) == 'c'){
+				int charctorPosX = x; 	
+				int charctorPosY = y;
+				Position charctorPos(charctorPosX, charctorPosY);
+				return charctorPos;
+			}
+		}
+	}
+	ASSERT(0, charctorPosX + charctorPosY, STRING(charctorPos), "キャラクターがマップに存在しません");
+	return Position(0, 0);
+}
+
+bool Processing::charactorMove(Position charctorPos,int VX,int VY){
+
+	if (mMap.at(0).getData()(charctorPos.x + VX, charctorPos.y + VY) == ' '){
+		mMap.at(0).getData()(charctorPos.x, charctorPos.y) = ' ';
+		mMap.at(0).getData()(charctorPos.x + VX, charctorPos.y + VY) = 'c';
+		mCharacter->Move(VX, VY);
+		return true;
+	}
+	else if (mMap.at(0).getData()(charctorPos.x + VX, charctorPos.y + VY) == 's'){
+		mState = GAME_INIT;
+	}
+	return false;
+}
+bool Processing::keyPushAction(){
+	Position charctorPos = getCharctorPos();
+
+	if (mKeyInput->getKeyIndex(KEY_A) == true || mKeyInput->getKeyIndex(KEY_LEFT) == true){
+		
+		return charactorMove(charctorPos, -1, 0);
+	}
+	else if (mKeyInput->getKeyIndex(KEY_D) == true || mKeyInput->getKeyIndex(KEY_RIGHT) == true){
+		
+		return charactorMove(charctorPos, 1, 0);
+	}
+	else if (mKeyInput->getKeyIndex(KEY_W) == true || mKeyInput->getKeyIndex(KEY_UP) == true){
+		
+		return charactorMove(charctorPos, 0, -1);
+	}
+	else if (mKeyInput->getKeyIndex(KEY_S) == true || mKeyInput->getKeyIndex(KEY_DOWN) == true){
+		
+		return charactorMove(charctorPos, 0, 1);
+	}
+	return false;
+};
+
+void Processing::mapClear(int index, const char charctor){
+	int width = mMap.at(0).getWidth();
+	int height = mMap.at(0).getHeight();
+
+	for (int y = 0; y < height; ++y){
+		for (int x = 0; x < width; ++x){
+			mMap.at(index).getData()(x, y) = charctor;
+		}
+	}
 }

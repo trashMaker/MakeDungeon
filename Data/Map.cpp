@@ -171,3 +171,4 @@ void Map::disp()const throw(){
 		std::cout << std::endl;
 	}
 }
+

@@ -5,6 +5,7 @@
 
 class Random;
 class Character;
+class KeyInput;
 
 class Processing{
 private:
@@ -14,15 +15,15 @@ private:
 	struct Position{
 		int x;
 		int y;
-		Position(int x, int y){
+		Position(int x= 0, int y = 0 ){
 			this->x = x;
 			this->y = y;
 		}
 	};
 
-	std::vector<struct Position> consolidatedList;	//space random potision
+	Position stairs;
 
-	
+	std::vector<struct Position> consolidatedList;	//space random potision
 
 	struct Data{
 		int firstX;
@@ -45,14 +46,16 @@ private:
 	};
 
 	enum STATE{
-		GAMEINIT,
-		GAMEMAIN,
+		GAME_INIT,
+		GAME_MAIN,
+		GAME_DRAW,
 	};
 	STATE mState;
 
 
 	Random* mRandom;
 	Character* mCharacter;
+	KeyInput* mKeyInput;
 	
 public:
 
@@ -68,9 +71,11 @@ public:
 	void setRandomPassagePosition(int range, int argSide);
 	Position getRandomSpacePosition(int range,int argSide, int firstX, int firstY);
 	void setConsolidatedPassage();
+	void setStairs();
+
 	bool setWayConsolidatedList(const std::string& way, std::vector<struct Position>* wayPos);
 	bool setDistanceConsolidatedList(int comparisonIndex,const std::vector<struct Position>& wayPos, std::vector<struct Data>* disPos);
-
+	void changePassageToSpace();
 	int getNeaIndexrDistancePos(int comparisonIndex, const std::vector<struct Data>& disPos);
 	void consolidatedPassage(int index, const std::vector<struct Data>& disPos);
 	void setConsolidated(int firstPos, int endPos,int posX, int posY);
@@ -80,5 +85,13 @@ public:
 	int getNeaIndexrDistancePos(const std::vector<struct Data>& disPos);
 
 	void makeRandomMap();
-	void setCharactorPos();
+	void firstSetCharactorPos();
+	void setDrawRangeMinMax(int* min, int* max, int charctorPos, const int range, const int maxLength)throw();
+	void draw(int viewRange);
+	Position getCharctorPos();
+
+	bool charactorMove(Position charctorPos, int VX, int VY);
+	bool keyPushAction();
+
+	void mapClear(int index, const char charctor);
 };

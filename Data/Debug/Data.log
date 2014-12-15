@@ -1,11 +1,20 @@
-﻿2014/12/14 2:04:18 にビルドを開始しました。
+﻿2014/12/15 9:59:49 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "D:\MakeGame\Data\Data.vcxproj" (Build ターゲット)。
      1>ClCompile:
          D:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Processing.cpp
          Processing.cpp
-     1>d:\makegame\data\processing.cpp(294): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
-     1>d:\makegame\data\processing.cpp(368): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
-     1>d:\makegame\data\processing.cpp(383): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>d:\makegame\data\keyinput.h(26): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _kbhit. See online help for details.
+                 d:\microsoft visual studio 12.0\vc\include\conio.h(133) : 'kbhit' の宣言を確認してください。
+     1>d:\makegame\data\keyinput.h(27): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 d:\microsoft visual studio 12.0\vc\include\conio.h(131) : 'getch' の宣言を確認してください。
+     1>d:\makegame\data\keyinput.h(34): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 d:\microsoft visual studio 12.0\vc\include\conio.h(131) : 'getch' の宣言を確認してください。
+     1>d:\makegame\data\keyinput.h(39): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 d:\microsoft visual studio 12.0\vc\include\conio.h(131) : 'getch' の宣言を確認してください。
+     1>d:\makegame\data\keyinput.h(45): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>d:\makegame\data\processing.cpp(314): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>d:\makegame\data\processing.cpp(388): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>d:\makegame\data\processing.cpp(403): warning C4800: 'unsigned int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
        Lib:
          D:\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\MakeGame\Debug\Data.lib" /NOLOGO Debug\Character.obj
          Debug\Common.obj
@@ -19,4 +28,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:01.11
+経過時間 00:00:01.38

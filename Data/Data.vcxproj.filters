@@ -13,6 +13,7 @@
     <ClInclude Include="Mover.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="KeyInput.h" />
+    <ClInclude Include="KeyCode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp" />

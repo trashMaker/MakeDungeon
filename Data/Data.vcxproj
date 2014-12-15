@@ -78,6 +78,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Exception.h" />
+    <ClInclude Include="KeyCode.h" />
     <ClInclude Include="KeyInput.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mover.h" />
